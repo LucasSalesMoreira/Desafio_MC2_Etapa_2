@@ -1,6 +1,5 @@
 <?php
 
-
 class Professor {
     private $codigo, $nome, $cpf, $nascimento;
 
