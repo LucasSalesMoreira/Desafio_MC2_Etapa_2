@@ -3,8 +3,8 @@
 
 session_start();
 
-//require_once "src/models/Professor.php";
-//require_once "src/models/Estudante.php";
+require_once "src/models/Professor.php";
+require_once "src/models/Estudante.php";
 require_once "src/controllers/Login.php";
 require_once "src/controllers/CreaterAccount.php";
 require_once "src/controllers/HomeLoad.php";
@@ -31,6 +31,12 @@ function homeLoad($type): void {
     } else if ($type === 3) {
         $homeLoad = new HomeLoad(null);
         $homeLoad->loadDisc();
+    } else if ($type === 4) {
+        $homeLoad = new HomeLoad(null);
+        $homeLoad->loadProf();
+    } else if ($type === 5) {
+        $homeLoad = new HomeLoad(null);
+        $homeLoad->loadEst();
     }
 }
 
@@ -48,6 +54,14 @@ function main(): void {
         } else if ($_GET['request_type'] === "home_load_disc") {
 
             homeLoad(3);
+
+        } else if ($_GET['request_type'] === "home_load_prof") {
+
+            homeLoad(4);
+
+        } else if ($_GET['request_type'] === "home_load_est") {
+
+            homeLoad(5);
 
         } else if ($_GET['request_type'] === "log_off") {
 

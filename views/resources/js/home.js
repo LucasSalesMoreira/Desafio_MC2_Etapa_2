@@ -234,11 +234,183 @@ $.ajax({
     }
 });
 
+var profVisualization = [];
+var idTrProf;
 
+function setProfVisualization() {
+    const tbody = document.getElementById("my_tbody_prof");
 
+    for (var i = 0; i < profVisualization.length; i++) {
+        const tr = document.createElement("tr");
 
+        console.log(i);
+        tr.id = ""+parseInt(i + 1);
 
+        tr.addEventListener("click", () => {
+            if (parseInt(tr.id) === idTrProf) {
+                tr.style.backgroundColor = "#ffffff";
+                idTrProf = undefined;
+            } else {
+                var allTrs = document.querySelectorAll("tr");
 
+                for (var position = 0; position < allTrs.length; position++)
+                    allTrs[position].style.backgroundColor = "#ffffff";
+
+                tr.style.backgroundColor = "#7fb9b8";
+                idTrProf = parseInt(tr.id);
+                console.log(idTrProf);
+            }
+        });
+
+        tbody.appendChild(tr);
+
+        const tdCodeProf = document.createElement("td");
+        tr.appendChild(tdCodeProf);
+        tdCodeProf.innerHTML = profVisualization[i].codigo;
+
+        const tdNameProf = document.createElement("td");
+        tr.appendChild(tdNameProf);
+        tdNameProf.innerHTML = profVisualization[i].nome;
+
+        const tdCpfProf = document.createElement("td");
+        tr.appendChild(tdCpfProf);
+        tdCpfProf.innerHTML = profVisualization[i].CPF;
+
+        const tdDateProf = document.createElement("td");
+        tr.appendChild(tdDateProf);
+        tdDateProf.innerHTML = profVisualization[i].data_nascimento;
+    }
+
+    document.getElementById("btUpdateProf").addEventListener("click", () => {
+        if (idTrProf === undefined)
+            alert("Selecione uma disciplina para editar seu nome!");
+        else {
+            // ajax para modifcar o professor...
+        }
+    });
+
+    document.getElementById("btAddProf").addEventListener("click", () => {
+        // ajax para Add um professor...
+    });
+
+    document.getElementById("btDeleteProf").addEventListener("click", () => {
+        if (idTrProf === undefined)
+            alert("Selecione uma disciplina para DELETAR!");
+        else {
+            // ajax para deletar um professor...
+        }
+    });
+}
+
+$.ajax({
+    type: "GET",
+    url: "../index.php",
+    data: {
+        request_type: "home_load_prof",
+    },
+    success: (response) => {
+
+        const responseJSON = JSON.parse(response);
+
+        if (responseJSON.ok === true) {
+            console.log(`ok: ${responseJSON.ok}`);
+            console.log(`data_array: ${responseJSON.data_array}`);
+            profVisualization = JSON.parse(responseJSON.data_array);
+            setProfVisualization();
+        } else {
+            alert("Sem dados para exibir!");
+        }
+    }
+});
+
+var estVisualization = [];
+var idTrEst;
+
+function setEstVisualization() {
+    const tbody = document.getElementById("my_tbody_est");
+
+    for (var i = 0; i < estVisualization.length; i++) {
+        const tr = document.createElement("tr");
+
+        console.log(i);
+        tr.id = ""+parseInt(i + 1);
+
+        tr.addEventListener("click", () => {
+            if (parseInt(tr.id) === idTrEst) {
+                tr.style.backgroundColor = "#ffffff";
+                idTrEst = undefined;
+            } else {
+                var allTrs = document.querySelectorAll("tr");
+
+                for (var position = 0; position < allTrs.length; position++)
+                    allTrs[position].style.backgroundColor = "#ffffff";
+
+                tr.style.backgroundColor = "#7fb9b8";
+                idTrEst = parseInt(tr.id);
+                console.log(idTrEst);
+            }
+        });
+
+        tbody.appendChild(tr);
+
+        const tdCodeEst = document.createElement("td");
+        tr.appendChild(tdCodeEst);
+        tdCodeEst.innerHTML = estVisualization[i].codigo;
+
+        const tdNameEst = document.createElement("td");
+        tr.appendChild(tdNameEst);
+        tdNameEst.innerHTML = estVisualization[i].nome;
+
+        const tdCpfEst = document.createElement("td");
+        tr.appendChild(tdCpfEst);
+        tdCpfEst.innerHTML = estVisualization[i].CPF;
+
+        const tdDateEst = document.createElement("td");
+        tr.appendChild(tdDateEst);
+        tdDateEst.innerHTML = estVisualization[i].data_nascimento;
+    }
+
+    document.getElementById("btUpdateEst").addEventListener("click", () => {
+        if (idTrProf === undefined)
+            alert("Selecione uma disciplina para editar seu nome!");
+        else {
+            // ajax para modifcar o professor...
+        }
+    });
+
+    document.getElementById("btAddEst").addEventListener("click", () => {
+        // ajax para Add um professor...
+    });
+
+    document.getElementById("btDeleteEst").addEventListener("click", () => {
+        if (idTrProf === undefined)
+            alert("Selecione uma disciplina para DELETAR!");
+        else {
+            // ajax para deletar um professor...
+        }
+    });
+}
+
+$.ajax({
+    type: "GET",
+    url: "../index.php",
+    data: {
+        request_type: "home_load_est",
+    },
+    success: (response) => {
+
+        const responseJSON = JSON.parse(response);
+
+        if (responseJSON.ok === true) {
+            console.log(`ok: ${responseJSON.ok}`);
+            console.log(`data_array: ${responseJSON.data_array}`);
+            estVisualization = JSON.parse(responseJSON.data_array);
+            setEstVisualization();
+        } else {
+            alert("Sem dados para exibir!");
+        }
+    }
+});
 
 document.getElementById("btExit").addEventListener("click", () => {
     // Sair da conta...

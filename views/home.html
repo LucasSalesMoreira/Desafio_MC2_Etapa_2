@@ -25,6 +25,12 @@
                 font-size: 3.5rem;
             }
         }
+
+        .scroll {
+            height: 300px;
+            max-width: 100%;
+            overflow: scroll
+        }
     </style>
 
     <link href="resources/css/grid.css" rel="stylesheet">
@@ -69,6 +75,7 @@
     <div class="container">
         <h1>Quadro de matrículas</h1>
         <h3>Apenas para visualização.</h3>
+        <div class="scroll">
         <table id="my_table">
             <thead>
             <tr>
@@ -87,11 +94,17 @@
             </tr>-->
             </tbody>
         </table>
+        </div>
+
         <br/>
         <br/>
         <br/>
+
+        <hr class="my-4">
+
         <h1>Quadro de matrículas (detalhado)</h1>
         <h3>Apenas para visualização.</h3>
+        <div class="scroll">
         <table id="my_table_detailed">
             <thead>
             <tr>
@@ -111,13 +124,17 @@
             </tr>-->
             </tbody>
         </table>
+        </div>
 
         <br/>
         <br/>
         <br/>
+
+        <hr class="my-4">
 
         <h1>Quadro de disciplinas</h1>
         <h3>Editável.</h3>
+        <div class="scroll">
         <table id="my_table_disc">
             <thead>
             <tr>
@@ -135,6 +152,7 @@
             </tr>-->
             </tbody>
         </table>
+        </div>
         <br/>
         <div id="edit_fields">
             <input type="text" class="form-control" id="name_disc" placeholder="Novo nome da disciplina">
@@ -146,6 +164,96 @@
             <br/>
             <br/>
             <button name="btSave" id="btDeleteDisc" class="w-100 btn btn-lg btn-primary">Deletar</button>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <hr class="my-4">
+
+        <h1>Quadro de professores</h1>
+        <h3>Editável.</h3>
+        <div class="scroll">
+            <table id="my_table_prof">
+                <thead>
+                <tr>
+                    <th>codigo</th>
+                    <th>nome</th>
+                    <th>CPF</th>
+                    <th>data_nascimento</th>
+                </tr>
+                </thead>
+                <tbody id="my_tbody_prof">
+                <!--<tr>
+                    <td>1</td>
+                    <td>POO</td>
+                    <td>Lucas Sales</td>
+                    <td>3</td>
+                </tr>-->
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div id="edit_fields_prof">
+            <input type="text" class="form-control" id="name_prof" placeholder="Novo nome">
+            <br/>
+            <input type="text" class="form-control" id="cpf_prof" placeholder="Novo CPF">
+            <br/>
+            <input type="text" class="form-control" id="date_prof" placeholder="Nova data de nascimento">
+            <br/>
+            <button name="btSave" id="btUpdateProf" class="w-100 btn btn-lg btn-primary">Atualizar</button>
+            <br/>
+            <br/>
+            <button name="btSave" id="btAddProf" class="w-100 btn btn-lg btn-primary">Adicionar</button>
+            <br/>
+            <br/>
+            <button name="btSave" id="btDeleteProf" class="w-100 btn btn-lg btn-primary">Deletar</button>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <hr class="my-4">
+
+        <h1>Quadro de Estudantes</h1>
+        <h3>Editável.</h3>
+        <div class="scroll">
+            <table id="my_table_est">
+                <thead>
+                <tr>
+                    <th>codigo</th>
+                    <th>nome</th>
+                    <th>CPF</th>
+                    <th>data_nascimento</th>
+                </tr>
+                </thead>
+                <tbody id="my_tbody_est">
+                <!--<tr>
+                    <td>1</td>
+                    <td>POO</td>
+                    <td>Lucas Sales</td>
+                    <td>3</td>
+                </tr>-->
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div id="edit_fields_est">
+            <input type="text" class="form-control" id="name_est" placeholder="Novo nome">
+            <br/>
+            <input type="text" class="form-control" id="cpf_est" placeholder="Novo CPF">
+            <br/>
+            <input type="text" class="form-control" id="date_est" placeholder="Nova data de nascimento">
+            <br/>
+            <button name="btSave" id="btUpdateEst" class="w-100 btn btn-lg btn-primary">Atualizar</button>
+            <br/>
+            <br/>
+            <button name="btSave" id="btAddEst" class="w-100 btn btn-lg btn-primary">Adicionar</button>
+            <br/>
+            <br/>
+            <button name="btSave" id="btDeleteEst" class="w-100 btn btn-lg btn-primary">Deletar</button>
         </div>
     </div>
 </main>

@@ -30,8 +30,16 @@ class Search {
         }
     }
 
+    public function searchProfessor() {
+        return $this->searchAll("SELECT * FROM professores");
+    }
+
     public function searchProfessorByCPF($cpf) {
         return $this->searchAll("SELECT * FROM professores WHERE CPF = '$cpf'");
+    }
+
+    public function searchEstudante() {
+        return $this->searchAll("SELECT * FROM estudantes");
     }
 
     public function searchEstudanteByCPF($cpf) {

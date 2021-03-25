@@ -39,4 +39,24 @@ class HomeLoad {
             echo json_encode(Array("ok" => false));
         }
     }
+
+    public function loadProf(): void {
+        $search = new Search();
+        $r = $search->searchProfessor();
+        if ($r) {
+            echo json_encode(Array("ok" => true, "data_array" => $r));
+        } else {
+            echo json_encode(Array("ok" => false));
+        }
+    }
+
+    public function loadEst(): void {
+        $search = new Search();
+        $r = $search->searchEstudante();
+        if ($r) {
+            echo json_encode(Array("ok" => true, "data_array" => $r));
+        } else {
+            echo json_encode(Array("ok" => false));
+        }
+    }
 }
