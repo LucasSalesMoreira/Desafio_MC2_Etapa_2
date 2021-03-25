@@ -25,7 +25,7 @@ class Recorder {
         $data_nascimento = $professor->getNascimento();
 
         $search = new Search();
-        if ($search->searchProfessorByCPF($cpf) === null) {
+        if (!$search->searchProfessorByCPF($cpf)) {
             $this->registerAll("INSERT INTO professores (nome, CPF, data_nascimento) VALUES ('$nome', '$cpf', '$data_nascimento')");
         } else {
             echo json_encode(Array("ok" => false));
@@ -38,11 +38,21 @@ class Recorder {
         $data_nascimento = $estudante->getNascimento();
 
         $search = new Search();
-        if ($search->searchEstudanteByCPF($cpf) === null) {
+        if (!$search->searchEstudanteByCPF($cpf)) {
             $this->registerAll("INSERT INTO estudantes (nome, CPF, data_nascimento) VALUES ('$nome', '$cpf', '$data_nascimento')");
         } else {
             echo json_encode(Array("ok" => false));
         }
+    }
+
+    public function registerDisc($name, $codeProfDisc) {
+        $search = new Search();
+        if ($search->searchProfessorByCode($codeProfDisc)) {
+            $this->registerAll("INSERT INTO disciplinas (nome, cod_professor) VALUES ('$name', $codeProfDisc)");
+        } else {
+            echo json_encode(Array("ok" => false));
+        }
+
     }
 
     public function registerUser(User $user): void {
@@ -50,5 +60,9 @@ class Recorder {
         $pass = $user->getPass();
 
         $this->registerAll("INSERT INTO login (email, senha) VALUES ('$email', '$pass')");
+    }
+
+    public function updateDisc($code, $name): void {
+        $this->registerAll("UPDATE disciplinas SET nome = '$name' WHERE codigo = $code");
     }
 }

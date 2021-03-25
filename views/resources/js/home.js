@@ -1,4 +1,3 @@
-
 // simple -> [{"codigo_disciplina":"1","nome_disciplina":"POO","nome_professor":"Lucas Sales","numero_estudantes":"3"}]
 
 var simpleVisualization = [];
@@ -11,7 +10,7 @@ function setSimpleVisualization() {
         const tr = document.createElement("tr");
 
         console.log(i);
-        tr.id = ""+parseInt(i + 1);
+        tr.id = "" + parseInt(i + 1);
 
         tr.addEventListener("click", () => {
             if (parseInt(tr.id) === idTrSimple) {
@@ -50,7 +49,7 @@ function setSimpleVisualization() {
 }
 
 $.ajax({
-    type: "GET",
+    type: "POST",
     url: "../index.php",
     data: {
         request_type: "home_load_simple",
@@ -84,7 +83,7 @@ function setDetailedVisualization() {
         const tr = document.createElement("tr");
 
         console.log(i);
-        tr.id = ""+parseInt(i + 1);
+        tr.id = "" + parseInt(i + 1);
 
         tr.addEventListener("click", () => {
             if (parseInt(tr.id) === idTrDetailed) {
@@ -127,7 +126,7 @@ function setDetailedVisualization() {
 }
 
 $.ajax({
-    type: "GET",
+    type: "POST",
     url: "../index.php",
     data: {
         request_type: "home_load_detailed",
@@ -159,7 +158,7 @@ function setDiscVisualization() {
         const tr = document.createElement("tr");
 
         console.log(i);
-        tr.id = ""+parseInt(i + 1);
+        tr.id = "" + parseInt(i + 1);
 
         tr.addEventListener("click", () => {
             if (parseInt(tr.id) === idTrDisc) {
@@ -197,11 +196,52 @@ function setDiscVisualization() {
             alert("Selecione uma disciplina para editar seu nome!");
         else {
             // ajax para modifcar o nome da disciplina...
+            var newName = document.getElementById("name_disc").value;
+            if (newName !== "") {
+                $.ajax({
+                    type: "POST",
+                    url: "../index.php",
+                    data: {
+                        request_type: "home_update_disc",
+                        codeDisc: idTrDisc,
+                        newName: newName,
+                    },
+                    success: (response) => {
+                        console.log(response);
+                        window.location.reload();
+                    }
+                });
+            } else {
+                alert("O nome não pode ser nulo!");
+            }
         }
     });
 
     document.getElementById("btAddDisc").addEventListener("click", () => {
         // ajax para Add uma nova disciplina...
+        var newName = document.getElementById("name_disc").value;
+        var codeProfDisc = document.getElementById("code_prof_disc").value;
+        if (newName !== "" && codeProfDisc !== "") {
+            $.ajax({
+                type: "POST",
+                url: "../index.php",
+                data: {
+                    request_type: "home_new_disc",
+                    name: newName,
+                    codeProfDisc: codeProfDisc
+                },
+                success: (response) => {
+                    console.log(response);
+                    const responseJSON = JSON.parse(response);
+                    if (responseJSON.ok === true)
+                        window.location.reload();
+                    else
+                        alert("Ops! Você deve ter inoformado um código inválido!")
+                }
+            });
+        } else {
+            alert("É preciso informa um nome e código de professor válido!");
+        }
     });
 
     document.getElementById("btDeleteDisc").addEventListener("click", () => {
@@ -213,8 +253,9 @@ function setDiscVisualization() {
     });
 }
 
+
 $.ajax({
-    type: "GET",
+    type: "POST",
     url: "../index.php",
     data: {
         request_type: "home_load_disc",
@@ -244,7 +285,7 @@ function setProfVisualization() {
         const tr = document.createElement("tr");
 
         console.log(i);
-        tr.id = ""+parseInt(i + 1);
+        tr.id = "" + parseInt(i + 1);
 
         tr.addEventListener("click", () => {
             if (parseInt(tr.id) === idTrProf) {
@@ -303,7 +344,7 @@ function setProfVisualization() {
 }
 
 $.ajax({
-    type: "GET",
+    type: "POST",
     url: "../index.php",
     data: {
         request_type: "home_load_prof",
@@ -333,7 +374,7 @@ function setEstVisualization() {
         const tr = document.createElement("tr");
 
         console.log(i);
-        tr.id = ""+parseInt(i + 1);
+        tr.id = "" + parseInt(i + 1);
 
         tr.addEventListener("click", () => {
             if (parseInt(tr.id) === idTrEst) {
@@ -392,7 +433,7 @@ function setEstVisualization() {
 }
 
 $.ajax({
-    type: "GET",
+    type: "POST",
     url: "../index.php",
     data: {
         request_type: "home_load_est",
@@ -416,7 +457,7 @@ document.getElementById("btExit").addEventListener("click", () => {
     // Sair da conta...
 
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "../index.php",
         data: {
             request_type: "log_off",

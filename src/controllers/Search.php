@@ -38,6 +38,10 @@ class Search {
         return $this->searchAll("SELECT * FROM professores WHERE CPF = '$cpf'");
     }
 
+    public function searchProfessorByCode($code) {
+        return $this->searchAll("SELECT * FROM professores WHERE codigo = $code");
+    }
+
     public function searchEstudante() {
         return $this->searchAll("SELECT * FROM estudantes");
     }
@@ -79,7 +83,7 @@ class Search {
         );
     }
 
-    public function searchDisc($email) {
+    public function searchDisc() {
         return $this->searchAll("SELECT * FROM disciplinas");
     }
 }

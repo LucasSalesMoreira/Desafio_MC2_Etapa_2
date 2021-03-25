@@ -23,10 +23,10 @@ function createNewAccount(): void {
 
 function homeLoad($type): void {
     if ($type === 1) {
-        $homeLoad = new HomeLoad($_GET['codeDisc']);
+        $homeLoad = new HomeLoad($_POST['codeDisc']);
         $homeLoad->loadSimple();
     } else if ($type === 2) {
-        $homeLoad = new HomeLoad($_GET['codeDisc']);
+        $homeLoad = new HomeLoad($_POST['codeDisc']);
         $homeLoad->loadDetailed();
     } else if ($type === 3) {
         $homeLoad = new HomeLoad(null);
@@ -40,33 +40,68 @@ function homeLoad($type): void {
     }
 }
 
+function homeUpdate($type): void {
+    if ($type === 1) {
+        $homeLoad = new HomeLoad($_POST['codeDisc']);
+        $homeLoad->updateDisc($_POST['newName']);
+    } else if ($type === 2) {
+        //$homeLoad = new HomeLoad($_POST['codeDisc']);
+        //$homeLoad->updateDisc($_POST['name']);
+    } else if ($type === 3) {
+        //$homeLoad = new HomeLoad($_POST['codeDisc']);
+        //$homeLoad->updateDisc($_POST['name']);
+    }
+}
+
+function homeNew($type) {
+    if ($type === 1) {
+        $homeLoad = new HomeLoad(null);
+        $homeLoad->newDisc($_POST['name'], $_POST['codeProfDisc']);
+    } else if ($type === 2) {
+        //$homeLoad = new HomeLoad($_POST['codeDisc']);
+        //$homeLoad->updateDisc($_POST['name']);
+    } else if ($type === 3) {
+        //$homeLoad = new HomeLoad($_POST['codeDisc']);
+        //$homeLoad->updateDisc($_POST['name']);
+    }
+}
+
 function main(): void {
+
     if (isset($_SESSION['email'])) {
 
-        if ($_GET['request_type'] === "home_load_simple") {
+        if ($_POST['request_type'] === "home_load_simple") {
 
             homeLoad(1);
 
-        } else if ($_GET['request_type'] === "home_load_detailed"){
+        } else if ($_POST['request_type'] === "home_load_detailed") {
 
             homeLoad(2);
 
-        } else if ($_GET['request_type'] === "home_load_disc") {
+        } else if ($_POST['request_type'] === "home_load_disc") {
 
             homeLoad(3);
 
-        } else if ($_GET['request_type'] === "home_load_prof") {
+        } else if ($_POST['request_type'] === "home_load_prof") {
 
             homeLoad(4);
 
-        } else if ($_GET['request_type'] === "home_load_est") {
+        } else if ($_POST['request_type'] === "home_load_est") {
 
             homeLoad(5);
 
-        } else if ($_GET['request_type'] === "log_off") {
+        } else if ($_POST['request_type'] === "log_off") {
 
             session_destroy();
-            echo json_encode(Array("ok" => true));
+            echo json_encode(array("ok" => true));
+
+        } else if ($_POST['request_type'] === "home_update_disc") {
+
+            homeUpdate(1);
+
+        } else if ($_POST['request_type'] === "home_new_disc") {
+
+            homeNew(1);
 
         } else {
 

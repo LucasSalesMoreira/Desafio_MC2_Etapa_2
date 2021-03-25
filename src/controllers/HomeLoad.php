@@ -1,6 +1,7 @@
 <?php
 
 require_once "Search.php";
+require_once "Recorder.php";
 
 class HomeLoad {
 
@@ -58,5 +59,15 @@ class HomeLoad {
         } else {
             echo json_encode(Array("ok" => false));
         }
+    }
+
+    public function updateDisc($name): void {
+        $recorder = new Recorder();
+        $recorder->updateDisc($this->codeDisc, $name);
+    }
+
+    public function newDisc($name, $codeProfDisc): void {
+        $recorder = new Recorder();
+        $recorder->registerDisc($name, $codeProfDisc);
     }
 }
