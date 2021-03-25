@@ -14,7 +14,7 @@ class CreaterAccount {
         $search = new Search();
         $r = $search->searchUserByEmail($this->user->getEmail());
         if ($r)
-            echo json_encode(Array("status" => false));
+            echo json_encode(Array("ok" => false));
         else {
             $recorder = new Recorder();
             $recorder->registerUser($this->user);

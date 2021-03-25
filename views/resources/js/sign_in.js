@@ -18,7 +18,7 @@ $("#btSubmitLogin").click(() => {
                 const responseJSON = JSON.parse(response);
 
                 if (responseJSON.ok === true) {
-                    window.location.href = responseJSON.redirected_to;
+                    window.location.href = "../index.php";
                 } else {
                     alert("Dados de acesso inválidos!");
                 }

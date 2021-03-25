@@ -31,18 +31,44 @@ class Search {
     }
 
     public function searchProfessorByCPF($cpf) {
-        return $this->searchAll("select * from professores where CPF = '$cpf'");
+        return $this->searchAll("SELECT * FROM professores WHERE CPF = '$cpf'");
     }
 
     public function searchEstudanteByCPF($cpf) {
-        return $this->searchAll("select * from estudantes where CPF = '$cpf'");
+        return $this->searchAll("SELECT * FROM estudantes WHERE CPF = '$cpf'");
     }
 
     public function searchUserByLogin($email, $pass) {
-        return $this->searchAll("select email from login where email = '$email' and senha = '$pass'");
+        return $this->searchAll("SELECT email FROM login WHERE email = '$email' AND senha = '$pass'");
     }
 
     public function searchUserByEmail($email) {
-        return $this->searchAll("select email from login where email = '$email'");
+        return $this->searchAll("SELECT email FROM login WHERE email = '$email'");
+    }
+
+    public function searchSimpleVisualization($codeDisc) {
+        return $this->searchAll(
+            "SELECT d.codigo AS 'codigo_disciplina', d.nome AS 'nome_disciplina', 
+                p.nome AS 'nome_professor', count(e.codigo) AS 'numero_estudantes' 
+                FROM lista_matriculas l 
+                INNER JOIN estudantes e 
+                on l.cod_estudante = e.codigo 
+                INNER JOIN disciplinas d on d.codigo = l.cod_disciplina
+                INNER JOIN professores p on p.codigo = d.cod_professor
+                WHERE d.codigo = $codeDisc"
+        );
+    }
+
+    public function searchDetailedVisualization($codeDisc) {
+        return $this->searchAll(
+            "SELECT d.codigo AS 'codigo_disciplina', d.nome AS 'nome_disciplina', 
+                p.nome AS 'nome_professor', e.codigo AS 'codigo_estudante', e.nome AS 'nome_estudante' 
+                FROM lista_matriculas l 
+                INNER JOIN estudantes e 
+                on l.cod_estudante = e.codigo 
+                INNER JOIN disciplinas d on d.codigo = l.cod_disciplina
+                INNER JOIN professores p on p.codigo = d.cod_professor
+                WHERE d.codigo = $codeDisc"
+        );
     }
 }

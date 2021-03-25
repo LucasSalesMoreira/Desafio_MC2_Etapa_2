@@ -13,9 +13,10 @@ class Login {
     public function login(): void {
         $search = new Search();
         $r = $search->searchUserByLogin($this->user->getEmail(), $this->user->getPass());
-        if ($r)
-            echo json_encode(Array("ok" => true, "redirected_to" => "../views/home.html"));
-        else
+        if ($r) {
+            $_SESSION['email'] = $this->user->getEmail();
+            echo json_encode(array("ok" => true));
+        } else
             echo json_encode(Array("ok" => false));
     }
 }

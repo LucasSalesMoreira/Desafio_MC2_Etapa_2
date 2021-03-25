@@ -2,12 +2,12 @@
 // Arquivo para tratar todas as requisições da aplicação.
 
 session_start();
-//require_once "src/controllers/Recorder.php";
-//require_once "src/controllers/Search.php";
+
 //require_once "src/models/Professor.php";
 //require_once "src/models/Estudante.php";
 require_once "src/controllers/Login.php";
 require_once "src/controllers/CreaterAccount.php";
+require_once "src/controllers/HomeLoad.php";
 require_once "src/models/User.php";
 
 
@@ -16,29 +16,54 @@ function login(): void {
     $login->login();
 }
 
-function createNewAccount() {
+function createNewAccount(): void {
     $createAccount = new CreaterAccount(new User($_POST['email'], $_POST['pass']));
     $createAccount->create();
 }
 
-if (isset($_SESSION['email'])) {
-
-    header("Location: views/home.html");
-
-} else if ($_POST['request_type'] === "login") {
-
-    login();
-
-} else if ($_POST['request_type'] === "new_account") {
-
-    createNewAccount();
-
-} else {
-    header("Location: views/sign_in.html");
+function homeLoad($type): void {
+    if ($type === 1) {
+        $homeLoad = new HomeLoad($_GET['codeDisc']);
+        $homeLoad->loadSimple();
+    } else if ($type === 2) {
+        $homeLoad = new HomeLoad($_GET['codeDisc']);
+        $homeLoad->loadDetailed();
+    }
 }
 
 
 
+function main(): void {
+    if (isset($_SESSION['email'])) {
+
+        if ($_GET['request_type'] === "home_load_simple") {
+
+            homeLoad(1);
+
+        } else if ($_GET['request_type'] === "home_load_detailed"){
+
+            homeLoad(2);
+
+        } else {
+
+            header("Location: views/home.html");
+
+        }
+
+    } else if ($_POST['request_type'] === "login") {
+
+        login();
+
+    } else if ($_POST['request_type'] === "new_account") {
+
+        createNewAccount();
+
+    } else {
+        header("Location: views/sign_in.html");
+    }
+}
+
+main();
 
 /*
 $recorder = new Recorder();
