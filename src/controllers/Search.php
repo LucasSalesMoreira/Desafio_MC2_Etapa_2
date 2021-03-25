@@ -55,7 +55,7 @@ class Search {
                 on l.cod_estudante = e.codigo 
                 INNER JOIN disciplinas d on d.codigo = l.cod_disciplina
                 INNER JOIN professores p on p.codigo = d.cod_professor
-                WHERE d.codigo = $codeDisc"
+                group by d.codigo;"
         );
     }
 
