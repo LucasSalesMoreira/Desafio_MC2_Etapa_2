@@ -45,6 +45,7 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" tabindex="-1" href="#">Home</a>
                 </li>
+                <!--
                 <li class="nav-item">
                     <a class="nav-link" href="#" tabindex="-1">Editar</a>
                 </li>
@@ -54,10 +55,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" tabindex="-1">Cadastrar</a>
                 </li>
+                -->
             </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <!--<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+                <button class="btn btn-outline-success" type="submit" id="btExit">Sair</button>
             </form>
         </div>
     </div>
@@ -65,30 +67,85 @@
 
 <main id="my_main">
     <div class="container">
-        <h1>Quadro de disciplinas</h1>
+        <h1>Quadro de matrículas</h1>
+        <h3>Apenas para visualização.</h3>
         <table id="my_table">
             <thead>
-                <tr>
-                    <th>codigo_disciplina</th>
-                    <th>nome_disciplina</th>
-                    <th>nome_professor</th>
-                    <th>numero_estudantes</th>
-                </tr>
+            <tr>
+                <th>codigo_disciplina</th>
+                <th>nome_disciplina</th>
+                <th>nome_professor</th>
+                <th>numero_estudantes</th>
+            </tr>
             </thead>
             <tbody id="my_tbody">
-                <!--<tr>
-                    <td>1</td>
-                    <td>POO</td>
-                    <td>Lucas Sales</td>
-                    <td>3</td>
-                </tr>-->
+            <!--<tr>
+                <td>1</td>
+                <td>POO</td>
+                <td>Lucas Sales</td>
+                <td>3</td>
+            </tr>-->
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+        <br/>
+        <h1>Quadro de matrículas (detalhado)</h1>
+        <h3>Apenas para visualização.</h3>
+        <table id="my_table_detailed">
+            <thead>
+            <tr>
+                <th>codigo_disciplina</th>
+                <th>nome_disciplina</th>
+                <th>nome_professor</th>
+                <th>codigo_estudantes</th>
+                <th>nome_estudantes</th>
+            </tr>
+            </thead>
+            <tbody id="my_tbody_detailed">
+            <!--<tr>
+                <td>1</td>
+                <td>POO</td>
+                <td>Lucas Sales</td>
+                <td>3</td>
+            </tr>-->
+            </tbody>
+        </table>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <h1>Quadro de disciplinas</h1>
+        <h3>Editável.</h3>
+        <table id="my_table_disc">
+            <thead>
+            <tr>
+                <th>codigo_disciplina</th>
+                <th>nome_disciplina</th>
+                <th>codigo_professor</th>
+            </tr>
+            </thead>
+            <tbody id="my_tbody_disc">
+            <!--<tr>
+                <td>1</td>
+                <td>POO</td>
+                <td>Lucas Sales</td>
+                <td>3</td>
+            </tr>-->
             </tbody>
         </table>
         <br/>
         <div id="edit_fields">
             <input type="text" class="form-control" id="name_disc" placeholder="Novo nome da disciplina">
             <br/>
-            <button name="btSave" id="btSave" class="w-100 btn btn-lg btn-primary">Salvar</button>
+            <button name="btSave" id="btUpdateDisc" class="w-100 btn btn-lg btn-primary">Atualizar</button>
+            <br/>
+            <br/>
+            <button name="btSave" id="btAddDisc" class="w-100 btn btn-lg btn-primary">Adicionar</button>
+            <br/>
+            <br/>
+            <button name="btSave" id="btDeleteDisc" class="w-100 btn btn-lg btn-primary">Deletar</button>
         </div>
     </div>
 </main>

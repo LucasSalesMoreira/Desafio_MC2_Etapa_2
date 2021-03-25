@@ -29,4 +29,14 @@ class HomeLoad {
             echo json_encode(Array("ok" => false));
         }
     }
+
+    public function loadDisc(): void {
+        $search = new Search();
+        $r = $search->searchDisc($this->codeDisc);
+        if ($r) {
+            echo json_encode(Array("ok" => true, "data_array" => $r));
+        } else {
+            echo json_encode(Array("ok" => false));
+        }
+    }
 }

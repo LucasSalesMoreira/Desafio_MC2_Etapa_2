@@ -28,10 +28,11 @@ function homeLoad($type): void {
     } else if ($type === 2) {
         $homeLoad = new HomeLoad($_GET['codeDisc']);
         $homeLoad->loadDetailed();
+    } else if ($type === 3) {
+        $homeLoad = new HomeLoad(null);
+        $homeLoad->loadDisc();
     }
 }
-
-
 
 function main(): void {
     if (isset($_SESSION['email'])) {
@@ -43,6 +44,15 @@ function main(): void {
         } else if ($_GET['request_type'] === "home_load_detailed"){
 
             homeLoad(2);
+
+        } else if ($_GET['request_type'] === "home_load_disc") {
+
+            homeLoad(3);
+
+        } else if ($_GET['request_type'] === "log_off") {
+
+            session_destroy();
+            echo json_encode(Array("ok" => true));
 
         } else {
 

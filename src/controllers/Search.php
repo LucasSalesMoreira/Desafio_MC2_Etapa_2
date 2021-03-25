@@ -67,8 +67,11 @@ class Search {
                 INNER JOIN estudantes e 
                 on l.cod_estudante = e.codigo 
                 INNER JOIN disciplinas d on d.codigo = l.cod_disciplina
-                INNER JOIN professores p on p.codigo = d.cod_professor
-                WHERE d.codigo = $codeDisc"
+                INNER JOIN professores p on p.codigo = d.cod_professor"
         );
+    }
+
+    public function searchDisc($email) {
+        return $this->searchAll("SELECT * FROM disciplinas");
     }
 }
