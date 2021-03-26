@@ -65,7 +65,7 @@ $.ajax({
             simpleVisualization = JSON.parse(responseJSON.data_array);
             setSimpleVisualization();
         } else {
-            alert("Sem dados para exibir!");
+            //alert("Sem dados para exibir!");
         }
     }
 });
@@ -125,6 +125,33 @@ function setDetailedVisualization() {
     }
 }
 
+document.getElementById("btAddInscr").addEventListener("click", () => {
+    // ajax para Add uma nova disciplina...
+    var codeDisc = document.getElementById("cod_inscr_disc").value;
+    var codeEst = document.getElementById("cod_inscr_est").value;
+    if (codeDisc !== "" && codeEst !== "") {
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_new_inscr",
+                codeDisc: codeDisc,
+                codeEst: codeEst
+            },
+            success: (response) => {
+                console.log(response);
+                const responseJSON = JSON.parse(response);
+                if (responseJSON.ok)
+                    window.location.reload();
+                else
+                    alert("Ops! Você deve ter inoformado um código inválido!")
+            }
+        });
+    } else {
+        alert("Os dados não podem ser nulos!");
+    }
+});
+
 $.ajax({
     type: "POST",
     url: "../index.php",
@@ -142,7 +169,7 @@ $.ajax({
             detailedVisualization = JSON.parse(responseJSON.data_array);
             setDetailedVisualization();
         } else {
-            alert("Sem dados para exibir!");
+            //alert("Sem dados para exibir!");
         }
     }
 });
@@ -190,35 +217,13 @@ function setDiscVisualization() {
         tr.appendChild(tdCodeProf);
         tdCodeProf.innerHTML = discVisualization[i].cod_professor;
     }
+}
 
-    document.getElementById("btUpdateDisc").addEventListener("click", () => {
-        if (idTrDisc === undefined)
-            alert("Selecione uma disciplina para editar seu nome!");
-        else {
-            // ajax para modifcar o nome da disciplina...
-            var newName = document.getElementById("name_disc").value;
-            if (newName !== "") {
-                $.ajax({
-                    type: "POST",
-                    url: "../index.php",
-                    data: {
-                        request_type: "home_update_disc",
-                        codeDisc: idTrDisc,
-                        newName: newName,
-                    },
-                    success: (response) => {
-                        console.log(response);
-                        window.location.reload();
-                    }
-                });
-            } else {
-                alert("O nome não pode ser nulo!");
-            }
-        }
-    });
-
-    document.getElementById("btAddDisc").addEventListener("click", () => {
-        // ajax para Add uma nova disciplina...
+document.getElementById("btUpdateDisc").addEventListener("click", () => {
+    if (idTrDisc === undefined)
+        alert("Selecione uma disciplina para editar seu nome!");
+    else {
+        // ajax para modifcar o nome da disciplina...
         var newName = document.getElementById("name_disc").value;
         var codeProfDisc = document.getElementById("code_prof_disc").value;
         if (newName !== "" && codeProfDisc !== "") {
@@ -226,33 +231,76 @@ function setDiscVisualization() {
                 type: "POST",
                 url: "../index.php",
                 data: {
-                    request_type: "home_new_disc",
-                    name: newName,
+                    request_type: "home_update_disc",
+                    codeDisc: discVisualization[idTrDisc - 1].codigo,
+                    newName: newName,
                     codeProfDisc: codeProfDisc
                 },
                 success: (response) => {
                     console.log(response);
-                    const responseJSON = JSON.parse(response);
-                    if (responseJSON.ok === true)
+                    if (JSON.parse(response).ok) {
                         window.location.reload();
-                    else
-                        alert("Ops! Você deve ter inoformado um código inválido!")
+                    } else {
+                        alert("Ops! algo deu  errado...")
+                    }
                 }
             });
         } else {
-            alert("É preciso informa um nome e código de professor válido!");
+            alert("Os dados não podem ser nulos!");
         }
-    });
+    }
+});
 
-    document.getElementById("btDeleteDisc").addEventListener("click", () => {
-        if (idTrDisc === undefined)
-            alert("Selecione uma disciplina para DELETAR!");
-        else {
-            // ajax para deletar a disciplina...
-        }
-    });
-}
+document.getElementById("btAddDisc").addEventListener("click", () => {
+    // ajax para Add uma nova disciplina...
+    var newName = document.getElementById("name_disc").value;
+    var codeProfDisc = document.getElementById("code_prof_disc").value;
+    if (newName !== "" && codeProfDisc !== "") {
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_new_disc",
+                name: newName,
+                codeProfDisc: codeProfDisc
+            },
+            success: (response) => {
+                console.log(response);
+                const responseJSON = JSON.parse(response);
+                if (responseJSON.ok)
+                    window.location.reload();
+                else
+                    alert("Ops! Você deve ter inoformado um código inválido!")
+            }
+        });
+    } else {
+        alert("É preciso informa um nome e código de professor válido!");
+    }
+});
 
+document.getElementById("btDeleteDisc").addEventListener("click", () => {
+    if (idTrDisc === undefined)
+        alert("Selecione uma disciplina para DELETAR!");
+    else {
+        // ajax para deletar a disciplina...
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_delete_disc",
+                codeDisc: discVisualization[idTrDisc - 1].codigo
+            },
+            success: (response) => {
+                console.log(response);
+                if (JSON.parse(response).ok) {
+                    window.location.reload();
+                } else {
+                    alert("Ops! algo deu  errado...")
+                }
+            }
+        });
+    }
+});
 
 $.ajax({
     type: "POST",
@@ -270,7 +318,7 @@ $.ajax({
             discVisualization = JSON.parse(responseJSON.data_array);
             setDiscVisualization();
         } else {
-            alert("Sem dados para exibir!");
+            //alert("Sem dados para exibir!");
         }
     }
 });
@@ -321,27 +369,96 @@ function setProfVisualization() {
         tr.appendChild(tdDateProf);
         tdDateProf.innerHTML = profVisualization[i].data_nascimento;
     }
-
-    document.getElementById("btUpdateProf").addEventListener("click", () => {
-        if (idTrProf === undefined)
-            alert("Selecione uma disciplina para editar seu nome!");
-        else {
-            // ajax para modifcar o professor...
-        }
-    });
-
-    document.getElementById("btAddProf").addEventListener("click", () => {
-        // ajax para Add um professor...
-    });
-
-    document.getElementById("btDeleteProf").addEventListener("click", () => {
-        if (idTrProf === undefined)
-            alert("Selecione uma disciplina para DELETAR!");
-        else {
-            // ajax para deletar um professor...
-        }
-    });
 }
+
+
+document.getElementById("btUpdateProf").addEventListener("click", () => {
+    if (idTrProf === undefined)
+        alert("Selecione um professor para editar!");
+    else {
+        // ajax para modifcar o professor...
+        var newName = document.getElementById("name_prof").value;
+        var newCPF = document.getElementById("cpf_prof").value;
+        var date = document.getElementById("date_prof").value;
+
+        if (newName !== "" && newCPF !== "" && date !== "") {
+            $.ajax({
+                type: "POST",
+                url: "../index.php",
+                data: {
+                    request_type: "home_update_prof",
+                    codeProf: profVisualization[idTrProf - 1].codigo,
+                    newName: newName,
+                    newCPF: newCPF,
+                    date: date
+                },
+                success: (response) => {
+                    console.log(response);
+                    if (JSON.parse(response).ok) {
+                        window.location.reload();
+                    } else {
+                        alert("Ops! algo deu  errado...")
+                    }
+                }
+            });
+        } else {
+            alert("Os dados não podem ser nulos!");
+        }
+    }
+});
+
+document.getElementById("btAddProf").addEventListener("click", () => {
+    // ajax para Add um professor...
+    var newName = document.getElementById("name_prof").value;
+    var newCPF = document.getElementById("cpf_prof").value;
+    var date = document.getElementById("date_prof").value;
+    if (newName !== "" && newCPF !== "" && date !== "") {
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_add_prof",
+                newName: newName,
+                newCPF: newCPF,
+                date: date
+            },
+            success: (response) => {
+                console.log(response);
+                const responseJSON = JSON.parse(response);
+                if (responseJSON.ok)
+                    window.location.reload();
+                else
+                    alert("Ops! Você deve ter inoformado um CPF inválido!")
+            }
+        });
+    } else {
+        alert("Os dados não podem ser nulos!");
+    }
+});
+
+document.getElementById("btDeleteProf").addEventListener("click", () => {
+    if (idTrProf === undefined)
+        alert("Selecione uma disciplina para DELETAR!");
+    else {
+        // ajax para deletar um professor...
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_delete_prof",
+                codeProf: profVisualization[idTrProf - 1].codigo
+            },
+            success: (response) => {
+                console.log(response);
+                const responseJSON = JSON.parse(response);
+                if (responseJSON.ok)
+                    window.location.reload();
+                else
+                    alert("Ops! Você deve ter inoformado um CPF inválido!")
+            }
+        });
+    }
+});
 
 $.ajax({
     type: "POST",
@@ -359,7 +476,7 @@ $.ajax({
             profVisualization = JSON.parse(responseJSON.data_array);
             setProfVisualization();
         } else {
-            alert("Sem dados para exibir!");
+            //alert("Sem dados para exibir!");
         }
     }
 });
@@ -410,27 +527,95 @@ function setEstVisualization() {
         tr.appendChild(tdDateEst);
         tdDateEst.innerHTML = estVisualization[i].data_nascimento;
     }
-
-    document.getElementById("btUpdateEst").addEventListener("click", () => {
-        if (idTrProf === undefined)
-            alert("Selecione uma disciplina para editar seu nome!");
-        else {
-            // ajax para modifcar o professor...
-        }
-    });
-
-    document.getElementById("btAddEst").addEventListener("click", () => {
-        // ajax para Add um professor...
-    });
-
-    document.getElementById("btDeleteEst").addEventListener("click", () => {
-        if (idTrProf === undefined)
-            alert("Selecione uma disciplina para DELETAR!");
-        else {
-            // ajax para deletar um professor...
-        }
-    });
 }
+document.getElementById("btUpdateEst").addEventListener("click", () => {
+    if (idTrEst === undefined)
+        alert("Selecione um Estudante para editar!");
+    else {
+        // ajax para modifcar o professor...
+        var newName = document.getElementById("name_est").value;
+        var newCPF = document.getElementById("cpf_est").value;
+        var date = document.getElementById("date_est").value;
+
+        if (newName !== "" && newCPF !== "" && date !== "") {
+            $.ajax({
+                type: "POST",
+                url: "../index.php",
+                data: {
+                    request_type: "home_update_est",
+                    codeEst: estVisualization[idTrEst - 1].codigo,
+                    newName: newName,
+                    newCPF: newCPF,
+                    date: date
+                },
+                success: (response) => {
+                    console.log(response);
+                    if (JSON.parse(response).ok) {
+                        window.location.reload();
+                    } else {
+                        alert("Ops! algo deu  errado...")
+                    }
+                }
+            });
+        } else {
+            alert("Os dados não podem ser nulos!");
+        }
+    }
+});
+
+document.getElementById("btAddEst").addEventListener("click", () => {
+    // ajax para Add um professor...
+    var newName = document.getElementById("name_est").value;
+    var newCPF = document.getElementById("cpf_est").value;
+    var date = document.getElementById("date_est").value;
+
+    if (newName !== "" && newCPF !== "" && date !== "") {
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_add_est",
+                newName: newName,
+                newCPF: newCPF,
+                date: date
+            },
+            success: (response) => {
+                console.log(response);
+                if (JSON.parse(response).ok) {
+                    window.location.reload();
+                } else {
+                    alert("Ops! algo deu  errado...")
+                }
+            }
+        });
+    } else {
+        alert("Os dados não podem ser nulos!");
+    }
+});
+
+document.getElementById("btDeleteEst").addEventListener("click", () => {
+    if (idTrEst === undefined)
+        alert("Selecione um estudante para DELETAR!");
+    else {
+        // ajax para deletar um estudante...
+        $.ajax({
+            type: "POST",
+            url: "../index.php",
+            data: {
+                request_type: "home_delete_est",
+                codeEst: estVisualization[idTrEst - 1].codigo
+            },
+            success: (response) => {
+                console.log(response);
+                if (JSON.parse(response).ok) {
+                    window.location.reload();
+                } else {
+                    alert("Ops! algo deu  errado...")
+                }
+            }
+        });
+    }
+});
 
 $.ajax({
     type: "POST",
@@ -448,7 +633,7 @@ $.ajax({
             estVisualization = JSON.parse(responseJSON.data_array);
             setEstVisualization();
         } else {
-            alert("Sem dados para exibir!");
+            //alert("Sem dados para exibir!");
         }
     }
 });

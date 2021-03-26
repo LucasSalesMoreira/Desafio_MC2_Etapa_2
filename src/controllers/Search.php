@@ -31,7 +31,8 @@ class Search {
     }
 
     public function searchProfessor() {
-        return $this->searchAll("SELECT * FROM professores");
+        return $this->searchAll("SELECT codigo, nome, CPF, 
+            date_format(data_nascimento, '%d/%m/%Y') AS 'data_nascimento' FROM professores");
     }
 
     public function searchProfessorByCPF($cpf) {
@@ -43,7 +44,8 @@ class Search {
     }
 
     public function searchEstudante() {
-        return $this->searchAll("SELECT * FROM estudantes");
+        return $this->searchAll("SELECT codigo, nome, CPF, 
+            date_format(data_nascimento, '%d/%m/%Y') AS 'data_nascimento' FROM estudantes");
     }
 
     public function searchEstudanteByCPF($cpf) {
@@ -85,5 +87,9 @@ class Search {
 
     public function searchDisc() {
         return $this->searchAll("SELECT * FROM disciplinas");
+    }
+
+    public function searchRecordsInDisciplines($code) {
+        return $this->searchAll("SELECT cod_disciplina FROM lista_matriculas WHERE cod_estudante = $code");
     }
 }

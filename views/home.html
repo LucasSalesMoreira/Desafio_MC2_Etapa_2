@@ -103,7 +103,6 @@
         <hr class="my-4">
 
         <h1>Quadro de matrículas (detalhado)</h1>
-        <h3>Apenas para visualização.</h3>
         <div class="scroll">
         <table id="my_table_detailed">
             <thead>
@@ -124,6 +123,14 @@
             </tr>-->
             </tbody>
         </table>
+        </div>
+        <br/>
+        <div id="edit_fields_inscr">
+            <input type="text" class="form-control" id="cod_inscr_disc" placeholder="codigo da disciplina">
+            <br/>
+            <input type="text" class="form-control" id="cod_inscr_est" placeholder="Código do estudante">
+            <br/>
+            <button name="btSave" id="btAddInscr" class="w-100 btn btn-lg btn-primary">Inscrever</button>
         </div>
 
         <br/>
@@ -202,7 +209,7 @@
             <br/>
             <input type="text" class="form-control" id="cpf_prof" placeholder="Novo CPF">
             <br/>
-            <input type="text" class="form-control" id="date_prof" placeholder="Nova data de nascimento">
+            <input type="date" value="2001-10-19" class="form-control" id="date_prof" placeholder="Nova data de nascimento">
             <br/>
             <button name="btSave" id="btUpdateProf" class="w-100 btn btn-lg btn-primary">Atualizar</button>
             <br/>
@@ -247,7 +254,7 @@
             <br/>
             <input type="text" class="form-control" id="cpf_est" placeholder="Novo CPF">
             <br/>
-            <input type="text" class="form-control" id="date_est" placeholder="Nova data de nascimento">
+            <input type="date" value="2001-10-19" class="form-control" id="date_est" placeholder="Nova data de nascimento">
             <br/>
             <button name="btSave" id="btUpdateEst" class="w-100 btn btn-lg btn-primary">Atualizar</button>
             <br/>
